@@ -44,14 +44,11 @@ public class AsyncTaskTest {
             // the String returned in the onPostExecute is being retrieved
              randomJoke = endpointsAsyncTask.get();
         }catch (Exception e) {
-            // Verify that the exception is null
             assertNull(e);
         }
-        // If the string is not null, then we got a value, aka a joke
         assertNotNull(randomJoke);
 
        assertTrue(randomJoke, randomJoke!= null);
- //      assertTrue(randomJoke, randomJoke.isEmpty());
 
 
 
