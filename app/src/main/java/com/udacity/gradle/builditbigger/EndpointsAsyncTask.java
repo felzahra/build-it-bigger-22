@@ -9,7 +9,7 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
-
+//import timber.log.Timber;
 import java.io.IOException;
 
 import eu.anifantakis.jokesdisplaylib.DisplayJokesActivity;
@@ -17,6 +17,9 @@ import eu.anifantakis.jokesdisplaylib.DisplayJokesActivity;
 class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+
+    /** Member variable for exception to handle errors */
+    private Exception mException = null;
 
     public EndpointsAsyncTask() {
 
@@ -44,11 +47,15 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
 
         context = params[0];
 
+
         try {
             return myApiService.getRandomJoke().execute().getData();
         } catch (IOException e) {
-            return "Error";
+            e.printStackTrace();
+
+            return e.getMessage();
         }
+
     }
 
     private TaskCompleteListener mTaskCompleteListener;
@@ -68,3 +75,4 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
         }
     }
 }
+
