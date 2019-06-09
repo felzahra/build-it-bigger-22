@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.assertFalse;
 
 
 
@@ -21,10 +22,22 @@ public class AsyncTaskTest {
     public ActivityTestRule<MainActivity> activityTestRule =
             new ActivityTestRule<MainActivity>(MainActivity.class);
 
+
+    EndpointsAsyncTask.TaskCompleteListener listener = new EndpointsAsyncTask.TaskCompleteListener() {
+        @Override
+        public void onTaskComplete(String result) {
+        }
+    };
+
     @Test
     public void testAsyncTask() throws InterruptedException, ExecutionException {
         // on the MainActivity execute the AsyncTask
-        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+
+        //EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+
+        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(listener);
+
+
         endpointsAsyncTask.execute(activityTestRule.getActivity());
         String randomJoke="";
         try {
@@ -37,9 +50,10 @@ public class AsyncTaskTest {
         // If the string is not null, then we got a value, aka a joke
         assertNotNull(randomJoke);
 
+       assertTrue(randomJoke, randomJoke!= null);
+ //      assertTrue(randomJoke, randomJoke.isEmpty());
 
 
-        // Verify that the received joke string is not empty
-        assertTrue(randomJoke, !randomJoke.isEmpty());
+
     }
 }
